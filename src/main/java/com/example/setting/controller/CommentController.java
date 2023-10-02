@@ -1,4 +1,5 @@
 package com.example.setting.controller;// CommentController.java
+
 import com.example.setting.dto.CommentDTO;
 import com.example.setting.entity.Comment;
 import com.example.setting.entity.MemberEntity;
@@ -6,14 +7,13 @@ import com.example.setting.repository.CommentRepository;
 import com.example.setting.repository.MemberRepository;
 import com.example.setting.service.CommentService;
 import com.example.setting.service.MemberService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +61,8 @@ public class CommentController {
 
         // 로그인한 사용자의 닉네임이 있을 경우에만 댓글 작성
         if (member.getMemberNickname() != null) {
-            comment.setMember(member);  // 댓글 작성자 설정
+            comment.setMemberNickname(member.getMemberNickname());  // 댓글 작성자 설정
+            comment.setTimestamp(new Date()); // 댓글 작성 시간 설정
             return commentRepository.save(comment);  // 댓글 저장 및 반환
         }
 

@@ -19,11 +19,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment addComment(Comment comment, String nickname) {
-        comment.setTimestamp(new Date()); // 댓글 작성 시간 설정
+        if (comment.getTimestamp() == null) {
+            comment.setTimestamp(new Date()); // 댓글 작성 시간 설정
+        }
         comment.setMemberNickname(nickname); // 사용자의 닉네임 설정
         comment.setLikes(0); // 초기 추천 수 설정
         return commentRepository.save(comment);
     }
+
 
     @Override
     public void likeComment(Long commentId, String nickname) {
